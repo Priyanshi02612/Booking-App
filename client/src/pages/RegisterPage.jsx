@@ -17,9 +17,7 @@ const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const handleRegisterUser = async (e) => {
-    e.preventDefault();
-
+  const handleRegisterUser = async () => {
     if (registrationData.password !== registrationData.repeatPassword) {
       toast({
         title: 'Passwords do not match.',
@@ -72,6 +70,8 @@ const RegisterPage = () => {
         duration: 3000,
       });
     }
+
+    setRegisteringUser(false);
   };
 
   return (
@@ -141,7 +141,7 @@ const RegisterPage = () => {
             color='white'
             _hover={{ backgroundColor: '#2da195' }}
             onClick={handleRegisterUser}
-            // isLoading={registeringUser}
+            isLoading={registeringUser}
           >
             Register
           </Button>
