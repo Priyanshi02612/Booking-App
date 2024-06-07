@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const registerRouter = require('./routes/register.route.js');
+const loginRouter = require('./routes/login.route.js');
 
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
@@ -36,3 +37,4 @@ app.get('/health_check', (req, res) => {
 });
 
 app.use('/booking', registerRouter);
+app.use('/user', loginRouter);
