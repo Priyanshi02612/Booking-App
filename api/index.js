@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 const registerRouter = require('./routes/register.route.js');
 const loginRouter = require('./routes/login.route.js');
 
@@ -8,6 +9,8 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
 const app = express();
+
+app.use(cookieParser());
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on port ${process.env.PORT}`);

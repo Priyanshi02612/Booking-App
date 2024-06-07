@@ -42,6 +42,11 @@ const login = async (req, res) => {
       });
     }
 
+    res.cookie('userId', existingUser._id, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
     // If everything is correct, return success
     res.status(200).json({
       success: true,
