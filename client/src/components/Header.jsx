@@ -1,44 +1,74 @@
-import React from 'react';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo2.png';
+import { UserContext } from '../context/UserContext';
 
 const Header = () => {
+  const { user } = useContext(UserContext);
+
   return (
-    <div>
-      <header className='flex justify-between items-center'>
-        <a href='/' className='flex items-center gap-1'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth={1.5}
-            stroke='currentColor'
-            className='size-6 -rotate-90'
+    <Box>
+      <Flex
+        mt='20px'
+        mx='20px'
+        justifyContent='space-between'
+        alignItems='center'
+      >
+        <Link
+          to={'/'}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            marginLeft: '12px',
+          }}
+        >
+          <Image src={logo} w='50px' h='50px' />
+
+          <Text fontWeight='bold' fontSize='32px' textColor='#14b8a6'>
+            airbnb
+          </Text>
+        </Link>
+
+        <Flex
+          border='1px solid'
+          borderColor='#d1d5db'
+          borderRadius='9999px'
+          py='8px'
+          px='20px'
+          gap='16px'
+          alignItems='center'
+          boxShadow='0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)'
+        >
+          <Text py='12px'>Anywhere</Text>
+
+          <Text px='12px' borderLeft='1px' borderColor='#d1d5db'>
+            Any week
+          </Text>
+
+          <Text
+            px='12px'
+            borderLeft='1px'
+            borderColor='#d1d5db'
+            textColor='#64748b'
+            cursor='pointer'
           >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5'
-            />
-          </svg>
-
-          <span className='font-bold text-xl text-teal-500'>airbnb</span>
-        </a>
-
-        <div className='flex border border-gray-300 rounded-full py-2 px-4 gap-2 items-center shadow-md shadow-gray-200'>
-          <div className='px-3'>Anywhere</div>
-
-          <div className='px-3 border-l'>Any week</div>
-
-          <div className='px-3 border-l text-slate-500 cursor-pointer'>
             Add guests
-          </div>
+          </Text>
 
-          <button className='search p-2 bg-teal-500 rounded-full text-white text-xs'>
+          <Button
+            bgColor='#14b8a6'
+            color='white'
+            _hover={{ backgroundColor: '#2da195' }}
+            borderRadius='50%'
+            p='10px'
+          >
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 20 20'
               fill='currentColor'
-              className='size-4'
+              className='size-6'
             >
               <path
                 fillRule='evenodd'
@@ -46,34 +76,58 @@ const Header = () => {
                 clipRule='evenodd'
               />
             </svg>
-          </button>
-        </div>
+          </Button>
+        </Flex>
 
         <Link
           to={'/login'}
-          className='flex gap-2 items-center border border-gray-300 rounded-full py-2 px-4 cursor-pointer'
+          style={{
+            display: 'flex',
+            gap: '12px',
+            border: '1px solid #d1d5db',
+            alignItems: 'center',
+            borderRadius: '50px',
+            padding: '6px 16px',
+            cursor: 'pointer',
+          }}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
-            fill='none'
             viewBox='0 0 24 24'
-            strokeWidth={1.5}
-            stroke='currentColor'
+            fill='currentColor'
             className='size-6'
+            style={{
+              width: '30px',
+              height: '30px',
+            }}
           >
             <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'
+              fillRule='evenodd'
+              d='M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z'
+              clipRule='evenodd'
             />
           </svg>
 
-          <div className='bg-gray-400 text-white rounded-full border border-gray-400 overflow-hidden '>
+          <Box
+            bgColor='#d1d5db'
+            textColor='white'
+            p='4px'
+            borderRadius='50%'
+            border='1px solid'
+            borderColor='#d1d5db'
+            overflow='hidden'
+          >
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
               fill='currentColor'
-              className='size-6 relative top-1'
+              className='size-6'
+              style={{
+                width: '30px',
+                height: '30px',
+                position: 'relative',
+                top: '6px',
+              }}
             >
               <path
                 fillRule='evenodd'
@@ -81,10 +135,11 @@ const Header = () => {
                 clipRule='evenodd'
               />
             </svg>
-          </div>
+          </Box>
+          {!!user && <Text>{user.name}</Text>}
         </Link>
-      </header>
-    </div>
+      </Flex>
+    </Box>
   );
 };
 
