@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const userRegisterSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Name is Required.'],
@@ -33,6 +33,6 @@ const userRegisterSchema = new mongoose.Schema({
   },
 });
 
-const RegisterModel = mongoose.model('registrationData', userRegisterSchema);
+const UserModel = mongoose.model('usersData', userSchema);
 
-module.exports = { RegisterModel };
+module.exports = { UserModel };
