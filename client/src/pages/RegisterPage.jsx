@@ -31,10 +31,7 @@ const RegisterPage = () => {
     try {
       setRegisteringUser(true);
 
-      const response = await axios.post('/booking/register', registrationData, {
-        withCredentials: true,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await axios.post('/user/register', registrationData);
 
       if (response.status === 200) {
         toast({
@@ -83,12 +80,13 @@ const RegisterPage = () => {
       justifyContent='space-around'
     >
       <Box mb='256px'>
-        <Text fontSize='36px' textAlign='center' mb='16px'>
+        <Text fontSize='36px' textAlign='center' my='16px'>
           Register
         </Text>
 
         <Box maxW='448px' mx='auto'>
           <Input
+            mb='12px'
             type='text'
             placeholder='Firstname Lastname'
             value={registrationData.name}
@@ -101,6 +99,7 @@ const RegisterPage = () => {
           />
 
           <Input
+            mb='12px'
             type='email'
             placeholder='your@email.com'
             value={registrationData.email}
@@ -113,6 +112,7 @@ const RegisterPage = () => {
           />
 
           <Input
+            mb='12px'
             type='password'
             placeholder='Password'
             value={registrationData.password}
@@ -125,6 +125,7 @@ const RegisterPage = () => {
           />
 
           <Input
+            mb='12px'
             type='password'
             placeholder='Re-enter password'
             value={registrationData.repeatPassword}
@@ -139,6 +140,7 @@ const RegisterPage = () => {
           <Button
             bgColor='#14b8a6'
             color='white'
+            w='100%'
             _hover={{ backgroundColor: '#2da195' }}
             onClick={handleRegisterUser}
             isLoading={registeringUser}
@@ -146,7 +148,7 @@ const RegisterPage = () => {
             Register
           </Button>
 
-          <Text textAlign='center' py='8px'>
+          <Text display='flex' gap='8px' justifyContent='center' py='16px'>
             Already have an account?
             <Link
               to={'/login'}
