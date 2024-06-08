@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Button, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, Input, Text, useToast } from '@chakra-ui/react';
+import { UserContext } from '../context/UserContext';
 
 const LoginPage = () => {
   const [userLoginData, setUserLoginData] = useState({
@@ -13,9 +14,13 @@ const LoginPage = () => {
 
   const toast = useToast();
 
+  const { user, setUser } = useContext(UserContext);
+
   const handleUserLogin = async () => {
     try {
       const response = await axios.post('/user/login', userLoginData);
+
+      setUser(response.data.data);
 
       if (response.status === 200) {
         toast({
@@ -47,12 +52,20 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='mt-4 grow flex items-center justify-around'>
-      <div className='mb-64'>
-        <h1 className='text-4xl text-center mb-4'>Login</h1>
+    <Flex
+      mt='16px'
+      alignItems='center'
+      justifyContent='space-around'
+      flexGrow='1'
+    >
+      <Box mb='256px'>
+        <Text fontSize='36px' textAlign='center' my='16px'>
+          Login
+        </Text>
 
-        <form className='max-w-md mx-auto'>
-          <input
+        <Box maxW='448px' mx='auto'>
+          <Input
+            mb='12px'
             type='email'
             placeholder='your@email.com'
             value={userLoginData.email}
@@ -61,7 +74,8 @@ const LoginPage = () => {
             }
           />
 
-          <input
+          <Input
+            mb='12px'
             type='password'
             placeholder='password'
             value={userLoginData.password}
@@ -73,21 +87,25 @@ const LoginPage = () => {
           <Button
             bgColor='#14b8a6'
             color='white'
+            w='100%'
             _hover={{ backgroundColor: '#2da195' }}
             onClick={handleUserLogin}
           >
             Login
           </Button>
 
-          <div className='text-center py-2'>
+          <Text display='flex' gap='8px' justifyContent='center' py='16px'>
             Don't have account?
-            <Link to={'/register'} className='text-teal-600 underline'>
+            <Link
+              to={'/register'}
+              style={{ color: '#14b8a6', textDecoration: 'underline' }}
+            >
               Register Now
             </Link>
-          </div>
-        </form>
-      </div>
-    </div>
+          </Text>
+        </Box>
+      </Box>
+    </Flex>
   );
 };
 
