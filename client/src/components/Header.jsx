@@ -80,7 +80,7 @@ const Header = () => {
         </Flex>
 
         <Link
-          to={'/login'}
+          to={user ? '/account' : '/login'}
           style={{
             display: 'flex',
             gap: '12px',

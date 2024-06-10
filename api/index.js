@@ -8,6 +8,8 @@ const { UserModel } = require('./models/user.model.js');
 
 dotenv.config({ path: './config.env' });
 
+const authRoutes = require('./routes/auth.route.js');
+
 const app = express();
 
 app.use(cookieParser());
@@ -79,3 +81,5 @@ app.get('/profile', async (req, res) => {
     res.status(401).send('No token found');
   }
 });
+
+app.use('/auth', authRoutes);
