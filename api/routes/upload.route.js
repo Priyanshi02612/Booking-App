@@ -26,7 +26,7 @@ const uploadController = createUploadController(path, validFormats);
 router.post('/upload-by-link', uploadController.uploadByLink);
 router.post(
   '/upload-by-file',
-  uploadStorage.array('photo', 10),
+  uploadStorage.array('photo', 100),
   uploadController.handleUploadBySelect
 );
 

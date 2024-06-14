@@ -12,10 +12,11 @@ import {
   SimpleGrid,
   Text,
   Textarea,
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   FaPlus,
   FaWifi,
@@ -39,6 +40,9 @@ const perksList = [
 
 const PlacesPage = () => {
   const { action } = useParams();
+  const [selectedPerks, setSelectedPerks] = useState([]);
+  const toast = useToast();
+  const navigate = useNavigate();
 
   const [placeFormData, setPlaceFormData] = useState({
     title: '',
@@ -49,28 +53,8 @@ const PlacesPage = () => {
     extraInfo: '',
     checkIn: 0,
     checkOut: 0,
-    maxGuests: 0,
+    maxGuests: 1,
   });
-
-  const [selectedPerks, setSelectedPerks] = useState([]);
-
-  const handlePlaceDataSave = () => {
-    setPlaceFormData({
-      title: '',
-      address: '',
-      photos: [],
-      description: '',
-      perks: [],
-      extraInfo: '',
-      checkIn: 0,
-      checkOut: 0,
-      maxGuests: 0,
-    });
-
-    setSelectedPerks([]);
-
-    console.log({ placeFormData });
-  };
 
   const handleAddPerks = (e, perkValue) => {
     const isChecked = e.target.checked;
@@ -85,6 +69,48 @@ const PlacesPage = () => {
   useEffect(() => {
     setPlaceFormData({ ...placeFormData, perks: selectedPerks });
   }, [selectedPerks]);
+
+  const handlePlaceDataSave = async () => {
+    try {
+      const response = await axios.post('/user/places', placeFormData);
+
+      if (response.status === 200) {
+        toast({
+          title: response.data.message,
+          status: 'success',
+          isClosable: true,
+          duration: 2000,
+        });
+      }
+
+      console.log(placeFormData);
+
+      setPlaceFormData({
+        title: '',
+        address: '',
+        photos: [],
+        description: '',
+        perks: [],
+        extraInfo: '',
+        checkIn: 0,
+        checkOut: 0,
+        maxGuests: 1,
+      });
+
+      setSelectedPerks([]);
+
+      navigate('/account/places');
+    } catch (error) {
+      console.log('Error while saving data.', error);
+
+      toast({
+        title: error.response.data.message,
+        status: 'error',
+        isClosable: true,
+        duration: 2000,
+      });
+    }
+  };
 
   const handleUploadPhotoByLink = async (imageLink) => {
     try {
@@ -152,9 +178,13 @@ const PlacesPage = () => {
       )}
 
       {action === 'new' && (
-        <Flex flexDir='column' gap='20px' p='24px'>
+        <Flex
+          flexDir='column'
+          gap='20px'
+          p={{ base: '24px 24px 40px', md: '24px' }}
+        >
           <FormControl>
-            <FormLabel>Title</FormLabel>
+            <FormLabel fontSize='24px'>Title</FormLabel>
 
             <FormHelperText>
               Title for your place. should be short and catchy as in
@@ -173,7 +203,7 @@ const PlacesPage = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>Address</FormLabel>
+            <FormLabel fontSize='24px'>Address</FormLabel>
 
             <FormHelperText>Address to this place</FormHelperText>
 
@@ -189,7 +219,7 @@ const PlacesPage = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>Photos</FormLabel>
+            <FormLabel fontSize='24px'>Photos</FormLabel>
 
             <FormHelperText>more = better</FormHelperText>
 
@@ -201,7 +231,7 @@ const PlacesPage = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>Description</FormLabel>
+            <FormLabel fontSize='24px'>Description</FormLabel>
 
             <FormHelperText>description of the place</FormHelperText>
 
@@ -219,7 +249,7 @@ const PlacesPage = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>Perks</FormLabel>
+            <FormLabel fontSize='24px'>Perks</FormLabel>
 
             <FormHelperText>select all the perks of your place</FormHelperText>
 
@@ -251,7 +281,7 @@ const PlacesPage = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>Extra info</FormLabel>
+            <FormLabel fontSize='24px'>Extra info</FormLabel>
 
             <FormHelperText>house rules,etc.</FormHelperText>
 
@@ -269,7 +299,7 @@ const PlacesPage = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>Check in&out times</FormLabel>
+            <FormLabel fontSize='24px'>Check in&out times</FormLabel>
 
             <FormHelperText>
               add check in and out times, remember to have some time window for
@@ -319,9 +349,7 @@ const PlacesPage = () => {
                 <Input
                   type='number'
                   placeholder='0'
-                  value={
-                    placeFormData.maxGuests === 0 ? '' : placeFormData.maxGuests
-                  }
+                  value={placeFormData.maxGuests}
                   onChange={(e) =>
                     setPlaceFormData({
                       ...placeFormData,
@@ -333,16 +361,18 @@ const PlacesPage = () => {
             </SimpleGrid>
           </FormControl>
 
-          <Button
-            bgColor='#14b8a6'
-            color='white'
-            px='50px'
-            width='15%'
-            _hover={{ backgroundColor: '#2da195' }}
-            onClick={handlePlaceDataSave}
-          >
-            Save
-          </Button>
+          <Flex justifyContent={{ base: 'center', md: 'left' }}>
+            <Button
+              bgColor='#14b8a6'
+              color='white'
+              px='50px'
+              width={{ base: '50%', md: '25%', lg: '15%' }}
+              _hover={{ backgroundColor: '#2da195' }}
+              onClick={handlePlaceDataSave}
+            >
+              Save
+            </Button>
+          </Flex>
         </Flex>
       )}
     </div>

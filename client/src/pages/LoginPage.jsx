@@ -14,7 +14,7 @@ const LoginPage = () => {
 
   const toast = useToast();
 
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const handleUserLogin = async () => {
     try {
@@ -53,7 +53,7 @@ const LoginPage = () => {
 
   return (
     <Flex
-      mt='16px'
+      m='16px 28px 0px 28px'
       alignItems='center'
       justifyContent='space-around'
       flexGrow='1'

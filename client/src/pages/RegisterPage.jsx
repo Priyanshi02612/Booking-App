@@ -73,7 +73,7 @@ const RegisterPage = () => {
 
   return (
     <Box
-      mt='12px'
+      m='16px 28px 0px 28px'
       display='flex'
       alignItems='center'
       flexGrow='1'

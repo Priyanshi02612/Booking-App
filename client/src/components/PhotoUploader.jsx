@@ -11,7 +11,12 @@ const PhotoUploader = ({
 
   return (
     <Box>
-      <Flex gap='2px' alignItems='center' mt='12px'>
+      <Flex
+        gap={{ base: '8px', md: '2px' }}
+        alignItems={{ base: 'normal', md: 'center' }}
+        mt='12px'
+        flexDir={{ base: 'column', md: 'row' }}
+      >
         <Input
           type='text'
           placeholder='Add using a link ...jpg'

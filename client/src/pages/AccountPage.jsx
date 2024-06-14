@@ -79,7 +79,13 @@ const AccountPage = () => {
 
   return (
     <Box mt='40px'>
-      <Flex alignItems='center' justifyContent='center' gap='40px'>
+      <Flex
+        mx={{ base: '20px', md: '0' }}
+        alignItems={{ base: 'normal', md: 'center' }}
+        justifyContent={{ base: 'normal', md: 'center' }}
+        gap={{ base: '12px', md: '40px' }}
+        flexWrap='wrap'
+      >
         {pages.map((page) => (
           <Link
             key={page.path}
