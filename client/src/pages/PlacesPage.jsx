@@ -8,7 +8,6 @@ import {
   FormHelperText,
   FormLabel,
   Icon,
-  Image,
   Input,
   SimpleGrid,
   Text,
@@ -19,7 +18,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
   FaPlus,
-  FaUpload,
   FaWifi,
   FaSquareParking,
   FaCat,
@@ -27,6 +25,8 @@ import {
   FaArrowRightToBracket,
   FaRadio,
 } from 'react-icons/fa6';
+
+import PhotoUploader from '../components/PhotoUploader';
 
 const perksList = [
   { title: 'Wifi', icon: FaWifi, value: 'wifi' },
@@ -51,7 +51,7 @@ const PlacesPage = () => {
     checkOut: 0,
     maxGuests: 0,
   });
-  const [imageLink, setImageLink] = useState('');
+
   const [selectedPerks, setSelectedPerks] = useState([]);
 
   const handlePlaceDataSave = () => {
@@ -86,7 +86,7 @@ const PlacesPage = () => {
     setPlaceFormData({ ...placeFormData, perks: selectedPerks });
   }, [selectedPerks]);
 
-  const handleUploadPhotoByLink = async () => {
+  const handleUploadPhotoByLink = async (imageLink) => {
     try {
       const response = await axios.post('/upload/upload-by-link', {
         imageLink: imageLink,
@@ -98,7 +98,6 @@ const PlacesPage = () => {
         ...placeFormData,
         photos: [...placeFormData.photos, filename],
       });
-      setImageLink('');
     } catch (error) {
       console.error('Error uploading photo by link:', error);
     }
@@ -194,64 +193,11 @@ const PlacesPage = () => {
 
             <FormHelperText>more = better</FormHelperText>
 
-            <Flex gap='2px' alignItems='center' mt='12px'>
-              <Input
-                type='text'
-                placeholder='Add using a link ...jpg'
-                value={imageLink}
-                onChange={(e) => setImageLink(e.target.value)}
-              />
-
-              <Button
-                bgColor='#14b8a6'
-                color='white'
-                px='50px'
-                _hover={{ backgroundColor: '#2da195' }}
-                onClick={handleUploadPhotoByLink}
-              >
-                Add photo
-              </Button>
-            </Flex>
-
-            <Flex gap='8px' flexWrap='wrap' mt='20px' alignItems='center'>
-              {placeFormData.photos.length > 0 &&
-                placeFormData.photos.map((link, index) => (
-                  <div key={index}>
-                    <Image
-                      src={'http://localhost:4002/uploads/' + link}
-                      w='150px'
-                      h='150px'
-                      borderRadius='8px'
-                      objectFit='cover'
-                    />
-                  </div>
-                ))}
-
-              <Flex
-                gap='8px'
-                alignItems='center'
-                fontWeight='normal'
-                backgroundColor='#f3f3f3'
-                borderRadius='8px'
-                padding='8px 16px'
-                cursor='pointer'
-                height='fit-content'
-                onClick={() => document.getElementById('fileInput').click()}
-              >
-                <Input
-                  type='file'
-                  display='none'
-                  name='photo'
-                  id='fileInput'
-                  onChange={(e) => handleFileSelect(e)}
-                  multiple
-                />
-
-                <Icon as={FaUpload} />
-
-                <Text fontSize='14px'>Upload</Text>
-              </Flex>
-            </Flex>
+            <PhotoUploader
+              placeFormData={placeFormData}
+              handleUploadPhotoByLink={handleUploadPhotoByLink}
+              handleFileSelect={handleFileSelect}
+            />
           </FormControl>
 
           <FormControl>
