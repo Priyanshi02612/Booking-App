@@ -88,7 +88,7 @@ const PlacesPage = () => {
 
   const handleUploadPhotoByLink = async () => {
     try {
-      const response = await axios.post('/upload-by-link', {
+      const response = await axios.post('/upload/upload-by-link', {
         imageLink: imageLink,
       });
 
@@ -114,7 +114,7 @@ const PlacesPage = () => {
         formData.append('photo', files[i]);
       }
 
-      const response = await axios.post('/upload', formData, {
+      const response = await axios.post('/upload/upload-by-file', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
