@@ -5,6 +5,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const userRouter = require('./routes/user.route.js');
 const { UserModel } = require('./models/user.model.js');
+const imageDownloader = require('image-downloader');
+const multer = require('multer');
+const path = require('path');
 
 dotenv.config({ path: './config.env' });
 
@@ -41,6 +44,7 @@ app.get('/health_check', (req, res) => {
 });
 
 app.use('/user', userRouter);
+app.use('/auth', authRoutes);
 
 async function getUserDataFromDatabase(token) {
   try {
@@ -82,4 +86,58 @@ app.get('/profile', async (req, res) => {
   }
 });
 
-app.use('/auth', authRoutes);
+const validFormats = ['.jpg', '.jpeg', '.png', '.gif'];
+
+app.post('/upload-by-link', async (req, res) => {
+  try {
+    const link = req.body.imageLink;
+
+    const extension = path.extname(link).toLowerCase();
+
+    if (!validFormats.includes(extension)) {
+      console.log('Invalid image format.');
+    }
+
+    const newFileName = 'photo' + Date.now() + extension;
+
+    const { filename } = await imageDownloader.image({
+      url: link,
+      dest: __dirname + '/uploads/' + newFileName,
+    });
+    console.log(filename);
+
+    res.json({ success: true, filename: newFileName });
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    res.status(500).json({ success: false, error: 'Failed to upload image' });
+  }
+});
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads');
+  },
+  filename: (req, file, cb) => {
+    const extension = path.extname(file.originalname).toLowerCase();
+    if (!validFormats.includes(extension)) {
+      return cb(new Error('Invalid image format'));
+    }
+    cb(null, 'photo' + Date.now() + extension);
+  },
+});
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+const uploadStorage = multer({ storage: storage });
+
+app.post('/upload', uploadStorage.array('photo', 10), (req, res) => {
+  try {
+    const filenames = req.files.map((file) => file.filename);
+    // console.log('Files uploaded:', filenames);
+
+    res.status(200).json({ success: true, files: filenames });
+  } catch (error) {
+    // console.error('Error uploading file:', error);
+    res.status(500).json({ success: false, error: 'Failed to upload file' });
+  }
+});
