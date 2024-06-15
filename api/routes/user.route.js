@@ -5,6 +5,5 @@ const router = express.Router();
 
 router.post('/register', userController.register);
 router.post('/login', userController.login);
-router.post('/places',userController.addPlaces)
 
 module.exports = router;

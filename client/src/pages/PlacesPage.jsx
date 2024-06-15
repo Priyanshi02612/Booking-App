@@ -1,12 +1,21 @@
 import { Box, Flex, Icon, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa6';
 
 import PlaceForm from './PlaceForm';
+import axios from 'axios';
 
 const PlacesPage = () => {
   const { action } = useParams();
+
+  useEffect(() => {
+    const fetchAllPlaces = async () => {
+      const response = await axios.get('/place/');
+      console.log({ response });
+    };
+    fetchAllPlaces();
+  }, []);
 
   return (
     <div>

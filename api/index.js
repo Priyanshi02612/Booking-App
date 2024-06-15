@@ -11,6 +11,7 @@ dotenv.config({ path: './config.env' });
 
 const authRoutes = require('./routes/auth.route.js');
 const uploadRouter = require('./routes/upload.route.js');
+const placeRouter = require('./routes/place.route.js');
 
 const app = express();
 
@@ -41,9 +42,6 @@ app.listen(process.env.PORT, () => {
 app.get('/health_check', (req, res) => {
   res.send({ success: true });
 });
-
-app.use('/user', userRouter);
-app.use('/auth', authRoutes);
 
 async function getUserDataFromDatabase(token) {
   try {
@@ -87,4 +85,7 @@ app.get('/profile', async (req, res) => {
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.use('/user', userRouter);
+app.use('/auth', authRoutes);
 app.use('/upload', uploadRouter);
+app.use('/place', placeRouter);
