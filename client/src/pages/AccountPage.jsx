@@ -8,14 +8,6 @@ import AccountNavbar from '../components/AccountNavbar';
 const AccountPage = () => {
   const { user, isUserReady } = useContext(UserContext);
 
-  if (!isUserReady) {
-    return (
-      <Flex h='40vh' alignItems='center' justifyContent='center'>
-        <Spinner size='md' />
-      </Flex>
-    );
-  }
-
   if (isUserReady && !user) {
     return <Navigate to={'/login'} />;
   }
