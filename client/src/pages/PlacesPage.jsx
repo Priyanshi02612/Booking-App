@@ -1,30 +1,39 @@
-import { Box, Flex, Icon, Text } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Box, Flex, Icon, Spinner, Text } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa6';
-
-import PlaceForm from './PlaceForm';
 import axios from 'axios';
+import Place from '../components/Place';
 
 const PlacesPage = () => {
-  const { action } = useParams();
+  const [placeData, setPlaceData] = useState([]);
+  const [fetchingPlaceData, setFetchingPlaceData] = useState(false);
 
   useEffect(() => {
     const fetchAllPlaces = async () => {
+      setFetchingPlaceData(true);
+
       const response = await axios.get('/place/');
-      console.log({ response });
+      const fetchedPlaceData = response.data.data;
+
+      setPlaceData(fetchedPlaceData);
+
+      setFetchingPlaceData(false);
     };
+
     fetchAllPlaces();
   }, []);
 
   return (
     <div>
-      {action !== 'new' && (
-        <Flex mt='20px' alignItems='center' flexDir='column'>
-          <Box>
-            <Text>List of all added places</Text>
-          </Box>
-
+      {fetchingPlaceData ? (
+        <div>
+          <Flex h='74vh' alignItems='center' justifyContent='center'>
+            <Spinner size='md' />
+          </Flex>
+        </div>
+      ) : (
+        <Flex mt='20px' flexDir='column' padding='24px'>
           <Link
             to={'/account/places/new'}
             style={{
@@ -36,18 +45,24 @@ const PlacesPage = () => {
               alignItems: 'center',
               gap: '8px',
               width: 'max-content',
+              alignSelf: 'center',
             }}
           >
             <Icon as={FaPlus} />
             <Text>Add new place</Text>
           </Link>
-        </Flex>
-      )}
 
-      {action === 'new' && (
-        <div>
-          <PlaceForm />
-        </div>
+          <Flex gap='20px'>
+            {placeData?.map((place, index) => (
+              <Link
+                to={`/account/places/${place._id}`}
+                key={index}
+              >
+                <Place place={place} />
+              </Link>
+            ))}
+          </Flex>
+        </Flex>
       )}
     </div>
   );

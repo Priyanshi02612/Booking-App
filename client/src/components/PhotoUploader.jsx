@@ -1,12 +1,20 @@
 import { Box, Button, Flex, Icon, Image, Input, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { FaUpload } from 'react-icons/fa6';
+import React, { useContext, useState } from 'react';
+import { FaUpload, FaTrash, FaStar, FaRegStar } from 'react-icons/fa6';
+import './index.css';
+import { PlaceContext } from '../context/PlaceContext';
 
-const PhotoUploader = ({
-  placeFormData,
-  handleUploadPhotoByLink,
-  handleFileSelect,
-}) => {
+const PhotoUploader = () => {
+  const {
+    placeFormData,
+    handleUploadPhotoByLink,
+    handleFileSelect,
+    handleDeleteImage,
+    uploadingPhoto,
+    handleSelectMainPhoto,
+    selectedMainPhoto,
+  } = useContext(PlaceContext);
+
   const [imageLink, setImageLink] = useState('');
 
   return (
@@ -28,6 +36,7 @@ const PhotoUploader = ({
           bgColor='#14b8a6'
           color='white'
           px='50px'
+          isLoading={uploadingPhoto}
           _hover={{ backgroundColor: '#2da195' }}
           onClick={() => {
             handleUploadPhotoByLink(imageLink);
@@ -41,15 +50,48 @@ const PhotoUploader = ({
       <Flex gap='8px' flexWrap='wrap' mt='20px' alignItems='center'>
         {placeFormData.photos.length > 0 &&
           placeFormData.photos.map((link, index) => (
-            <div key={index}>
+            <Box key={index} position='relative'>
               <Image
                 src={'http://localhost:4002/uploads/' + link}
-                w='250px'
+                w='160px'
                 h='150px'
                 borderRadius='8px'
+                boxShadow='md'
                 objectFit='cover'
               />
-            </div>
+
+              <Icon
+                as={placeFormData.photos[0] === link ? FaStar : FaRegStar}
+                color='white'
+                p='4px'
+                w='20px'
+                h='20px'
+                backgroundColor='black'
+                borderRadius='4px'
+                opacity='0.8'
+                cursor='pointer'
+                position='absolute'
+                bottom='4px'
+                left='4px'
+                onClick={() => handleSelectMainPhoto(link)}
+              />
+
+              <Icon
+                as={FaTrash}
+                color='white'
+                p='4px'
+                w='20px'
+                h='20px'
+                backgroundColor='black'
+                borderRadius='4px'
+                opacity='0.8'
+                cursor='pointer'
+                position='absolute'
+                bottom='4px'
+                right='4px'
+                onClick={() => handleDeleteImage(link, placeFormData)}
+              />
+            </Box>
           ))}
 
         <Flex

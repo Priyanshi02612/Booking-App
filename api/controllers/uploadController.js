@@ -1,10 +1,19 @@
 const imageDownloader = require('image-downloader');
+const { PlaceModel } = require('../models/places.model');
 
 function createUploadController(path, validFormats) {
   return {
     uploadByLink: async (req, res) => {
       try {
         const link = req.body.imageLink;
+
+        if (!link) {
+          return res.status(409).json({
+            success: false,
+            message:
+              'Please enter image link to add photo or upload photo from your device.',
+          });
+        }
 
         const extension = path.extname(link).toLowerCase();
 
@@ -41,6 +50,43 @@ function createUploadController(path, validFormats) {
         res
           .status(500)
           .json({ success: false, error: 'Failed to upload file' });
+      }
+    },
+
+    deleteImage: async (req, res) => {
+      const file = req.body.file;
+      console.log({ file });
+
+      const placeId = req.body.data._id;
+      console.log({ placeId });
+
+      try {
+        const place = await PlaceModel.findById(placeId);
+
+        if (!place) {
+          return res.status(404).json({
+            success: false,
+            message: 'Place not found.',
+          });
+        }
+
+        const updatedPhotos = place.photos.filter((image) => image !== file);
+        place.photos = updatedPhotos;
+
+        await place.save();
+
+        res.status(200).json({
+          success: true,
+          message: 'Image deleted successfully.',
+          data: updatedPhotos,
+        });
+      } catch (error) {
+        console.error('Error deleting image:', error);
+        res.status(500).json({
+          success: false,
+          message: 'Failed to delete image.',
+          error: error.message,
+        });
       }
     },
   };

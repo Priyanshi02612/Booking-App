@@ -7,7 +7,7 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   FaWifi,
   FaSquareParking,
@@ -16,6 +16,7 @@ import {
   FaArrowRightToBracket,
   FaRadio,
 } from 'react-icons/fa6';
+import { PlaceContext } from '../context/PlaceContext';
 
 const perksList = [
   { title: 'Wifi', icon: FaWifi, value: 'wifi' },
@@ -26,7 +27,9 @@ const perksList = [
   { title: 'Private entrance', icon: FaArrowRightToBracket, value: 'entrance' },
 ];
 
-const PerksList = ({ selectedPerks, handleAddPerks }) => {
+const PerksList = () => {
+  const { selectedPerks, handleAddPerks } = useContext(PlaceContext);
+
   return (
     <CheckboxGroup colorScheme='teal'>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={2} mt='12px'>
@@ -40,6 +43,7 @@ const PerksList = ({ selectedPerks, handleAddPerks }) => {
           >
             <Checkbox
               value={perk.value}
+              name={perk.value}
               isChecked={selectedPerks.includes(perk.value)}
               onChange={(e) => handleAddPerks(e, perk.value)}
             >

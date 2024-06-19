@@ -29,5 +29,6 @@ router.post(
   uploadStorage.array('photo', 100),
   uploadController.handleUploadBySelect
 );
+router.delete('/delete-image',uploadController.deleteImage)
 
 module.exports = router;

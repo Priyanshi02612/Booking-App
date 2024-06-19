@@ -11,7 +11,25 @@ class placeController {
       });
     } catch (error) {
       res.status(500).json({
+        success: false,
+        message: 'Error while retrieving place data.',
+      });
+    }
+  };
+
+  singlePlace = async (req, res) => {
+    const placeId = req.params.id;
+
+    try {
+      const placeData = await PlaceModel.findById(placeId);
+
+      res.status(200).json({
         success: true,
+        data: placeData,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
         message: 'Error while retrieving place data.',
       });
     }
@@ -58,6 +76,39 @@ class placeController {
       message: 'Data saved successfully!',
       data: addedNewPlace,
     });
+  };
+
+  updatePlace = async (req, res) => {
+    const placeId = req.body.id;
+    const placeDataToBeUpdated = req.body.placeFormData;
+
+    try {
+      const updatedPlace = await PlaceModel.findByIdAndUpdate(
+        placeId,
+        placeDataToBeUpdated,
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedPlace) {
+        return res.status(404).json({
+          success: false,
+          message: 'Place not found.',
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: 'Place updated successfully!',
+        data: updatedPlace,
+      });
+    } catch (error) {
+      console.error('Error while updating place:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Error while updating place data.',
+        error: error.message,
+      });
+    }
   };
 }
 
