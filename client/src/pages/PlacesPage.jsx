@@ -1,19 +1,22 @@
-import { Box, Flex, Icon, Spinner, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Flex, Icon, Spinner, Text } from '@chakra-ui/react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa6';
 import axios from 'axios';
-import Place from '../components/Place';
+import UsersPlace from '../components/UsersPlace';
+import { UserContext } from '../context/UserContext';
 
 const PlacesPage = () => {
   const [placeData, setPlaceData] = useState([]);
   const [fetchingPlaceData, setFetchingPlaceData] = useState(false);
+  const { user } = useContext(UserContext);
+  const userId = user?._id;
 
   useEffect(() => {
     const fetchAllPlaces = async () => {
       setFetchingPlaceData(true);
 
-      const response = await axios.get('/place/');
+      const response = await axios.get(`/user-place/place:${userId}`);
       const fetchedPlaceData = response.data.data;
 
       setPlaceData(fetchedPlaceData);
@@ -22,7 +25,7 @@ const PlacesPage = () => {
     };
 
     fetchAllPlaces();
-  }, []);
+  }, [userId]);
 
   return (
     <div>
@@ -54,11 +57,8 @@ const PlacesPage = () => {
 
           <Flex gap='20px'>
             {placeData?.map((place, index) => (
-              <Link
-                to={`/account/places/${place._id}`}
-                key={index}
-              >
-                <Place place={place} />
+              <Link to={`/account/places/${place._id}`} key={index}>
+                <UsersPlace place={place} />
               </Link>
             ))}
           </Flex>

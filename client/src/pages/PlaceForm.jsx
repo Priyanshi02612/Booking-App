@@ -40,8 +40,8 @@ const PlaceForm = () => {
       setFetchingPlaceDataById(true);
 
       setTimeout(async () => {
-        const response = await axios.get(`/place/place${id}`);
-        const fetchedPlaceData = response.data.data;
+        const response = await axios.get(`/user-place/place${id}`);
+        const fetchedPlaceData = response.data.data[0];
 
         setPlaceFormData(fetchedPlaceData);
         setSelectedPerks(fetchedPlaceData.perks);
@@ -160,7 +160,7 @@ const PlaceForm = () => {
               cleaning the room between guests
             </FormHelperText>
 
-            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={2} mt='12px'>
+            <SimpleGrid columns={{ base: 1, md: 4 }} spacing={2} mt='12px'>
               <Box>
                 <Text fontSize='15px'>Check in time</Text>
 
@@ -208,6 +208,22 @@ const PlaceForm = () => {
                     setPlaceFormData({
                       ...placeFormData,
                       maxGuests: parseInt(e.target.value),
+                    })
+                  }
+                />
+              </Box>
+
+              <Box>
+                <Text fontSize='15px'>Price per night</Text>
+
+                <Input
+                  type='number'
+                  placeholder='0'
+                  value={placeFormData.pricePerNight}
+                  onChange={(e) =>
+                    setPlaceFormData({
+                      ...placeFormData,
+                      pricePerNight: parseInt(e.target.value),
                     })
                   }
                 />

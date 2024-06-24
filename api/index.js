@@ -11,6 +11,7 @@ dotenv.config({ path: './config.env' });
 
 const authRoutes = require('./routes/auth.route.js');
 const uploadRouter = require('./routes/upload.route.js');
+const userPlaceRouter = require('./routes/userPlace.route.js');
 const placeRouter = require('./routes/place.route.js');
 
 const app = express();
@@ -88,4 +89,5 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/user', userRouter);
 app.use('/auth', authRoutes);
 app.use('/upload', uploadRouter);
+app.use('/user-place', userPlaceRouter);
 app.use('/place', placeRouter);

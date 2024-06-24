@@ -1,13 +1,15 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
-import { React, createContext, useEffect, useState } from 'react';
+import { React, createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { UserContext } from './UserContext';
 
 export const PlaceContext = createContext();
 
 const PlaceContextProvider = ({ children }) => {
   const [selectedPerks, setSelectedPerks] = useState([]);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const { user } = useContext(UserContext);
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -22,7 +24,15 @@ const PlaceContextProvider = ({ children }) => {
     checkIn: 0,
     checkOut: 0,
     maxGuests: 1,
+    userId: '',
+    pricePerNight: 100,
   });
+
+  useEffect(() => {
+    if (user) {
+      setPlaceFormData({ ...placeFormData, userId: user._id });
+    }
+  }, [user]);
 
   const handleAddPerks = (e, perkValue) => {
     const isChecked = e.target.checked;
@@ -41,7 +51,7 @@ const PlaceContextProvider = ({ children }) => {
   const handlePlaceDataSave = async (id) => {
     try {
       if (id) {
-        const response = await axios.put(`/place/updateplace`, {
+        const response = await axios.put(`/user-place/updateplace`, {
           id,
           placeFormData,
         });
@@ -54,7 +64,10 @@ const PlaceContextProvider = ({ children }) => {
           });
         }
       } else {
-        const response = await axios.post('/place/addplace', placeFormData);
+        const response = await axios.post(
+          '/user-place/addplace',
+          placeFormData
+        );
         if (response.status === 200) {
           toast({
             title: response.data.message,
@@ -75,6 +88,8 @@ const PlaceContextProvider = ({ children }) => {
         checkIn: 0,
         checkOut: 0,
         maxGuests: 1,
+        userId: '',
+        pricePerNight: 0,
       });
 
       setSelectedPerks([]);
