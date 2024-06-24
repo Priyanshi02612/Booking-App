@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-import { Box, Flex, Spinner } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
 import AccountNavbar from '../components/AccountNavbar';
 

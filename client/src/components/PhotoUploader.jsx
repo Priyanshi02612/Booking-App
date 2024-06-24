@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Icon, Image, Input, Text } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
 import { FaUpload, FaTrash, FaStar, FaRegStar } from 'react-icons/fa6';
-import './index.css';
 import { PlaceContext } from '../context/PlaceContext';
 
 const PhotoUploader = () => {
@@ -12,7 +11,6 @@ const PhotoUploader = () => {
     handleDeleteImage,
     uploadingPhoto,
     handleSelectMainPhoto,
-    selectedMainPhoto,
   } = useContext(PlaceContext);
 
   const [imageLink, setImageLink] = useState('');

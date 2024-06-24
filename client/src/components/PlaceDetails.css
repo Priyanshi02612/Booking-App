@@ -1,0 +1,19 @@
+.more-photos-text {
+  display: none;
+}
+
+.more-photos:hover .more-photos-text {
+  display: block;
+  animation: morePhotos 0.5s ease-in-out;
+}
+
+@keyframes morePhotos {
+  from {
+     display: none;
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    display: block;
+  }
+}

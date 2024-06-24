@@ -21,7 +21,6 @@ const Header = () => {
           to={'/'}
           style={{
             display: 'flex',
-            alignItems: 'center',
             gap: '4px',
           }}
         >
@@ -29,8 +28,9 @@ const Header = () => {
 
           <Text
             fontWeight='bold'
-            fontSize={{ base: '24px', md: '32px' }}
+            fontSize={{ base: '24px', md: '40px' }}
             textColor='#14b8a6'
+            className='great-vibes-regular'
           >
             Bookatrip
           </Text>
