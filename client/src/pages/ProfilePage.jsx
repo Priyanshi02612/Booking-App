@@ -47,13 +47,7 @@ const ProfilePage = ({ setRedirect }) => {
         Logged in as {user?.name} ({user?.email})
       </Text>
 
-      <Button
-        bgColor='#14b8a6'
-        color='white'
-        px='50px'
-        _hover={{ backgroundColor: '#2da195' }}
-        onClick={handleUserLogout}
-      >
+      <Button colorScheme='teal' px='50px' onClick={handleUserLogout}>
         Log out
       </Button>
     </Flex>

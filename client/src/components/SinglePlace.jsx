@@ -15,18 +15,11 @@ const SinglePlace = ({ place }) => {
         w={{ base: '300px', md: '212px', lg: '250px' }}
         h='200px'
         borderRadius='12px'
+        objectFit='cover'
       />
 
       <Flex alignItems='center' justifyContent='space-between' px='4px'>
-        <Text
-          w={{ base: '140px', lg: '130px', '2xl': '180px' }}
-          overflow='hidden'
-          textOverflow='ellipsis'
-          style={{ textWrap: 'nowrap' }}
-          fontWeight='bold'
-        >
-          {place.title}
-        </Text>
+        <Text fontWeight='bold'>{place.title}</Text>
 
         <Flex gap='2px' alignItems='center'>
           <Icon as={FaStar} w='12px' h='12px' />

@@ -233,22 +233,18 @@ const PlaceForm = () => {
 
           <Flex justifyContent='space-between' gap='20px'>
             <Button
-              bgColor='#14b8a6'
-              color='white'
+              colorScheme='teal'
               px='50px'
               width={{ base: '35%', lg: '15%' }}
-              _hover={{ backgroundColor: '#2da195' }}
               onClick={() => navigate(-1)}
             >
               Back
             </Button>
 
             <Button
-              bgColor='#14b8a6'
-              color='white'
+              colorScheme='teal'
               px='50px'
               width={{ base: '35%', lg: '15%' }}
-              _hover={{ backgroundColor: '#2da195' }}
               onClick={() => handlePlaceDataSave(id)}
             >
               Save

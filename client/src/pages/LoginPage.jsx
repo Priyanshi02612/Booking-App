@@ -84,13 +84,7 @@ const LoginPage = () => {
             }
           />
 
-          <Button
-            bgColor='#14b8a6'
-            color='white'
-            w='100%'
-            _hover={{ backgroundColor: '#2da195' }}
-            onClick={handleUserLogin}
-          >
+          <Button colorScheme='teal' w='100%' onClick={handleUserLogin}>
             Login
           </Button>
 

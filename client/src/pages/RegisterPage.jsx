@@ -138,10 +138,8 @@ const RegisterPage = () => {
           />
 
           <Button
-            bgColor='#14b8a6'
-            color='white'
             w='100%'
-            _hover={{ backgroundColor: '#2da195' }}
+            colorScheme='teal'
             onClick={handleRegisterUser}
             isLoading={registeringUser}
           >

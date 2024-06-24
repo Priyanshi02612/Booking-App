@@ -31,11 +31,9 @@ const PhotoUploader = () => {
         />
 
         <Button
-          bgColor='#14b8a6'
-          color='white'
+          colorScheme='teal'
           px='50px'
           isLoading={uploadingPhoto}
-          _hover={{ backgroundColor: '#2da195' }}
           onClick={() => {
             handleUploadPhotoByLink(imageLink);
             setImageLink('');
