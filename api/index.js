@@ -7,7 +7,7 @@ const userRouter = require('./routes/user.route.js');
 const { UserModel } = require('./models/user.model.js');
 const path = require('path');
 
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: './.env' });
 
 const authRoutes = require('./routes/auth.route.js');
 const uploadRouter = require('./routes/upload.route.js');

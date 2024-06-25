@@ -1,0 +1,16 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "deploy": "netlify deploy --prod",
+    "build": "npx esbuild index.js --outfile=dist/bundle.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
