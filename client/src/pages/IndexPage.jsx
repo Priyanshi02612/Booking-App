@@ -31,12 +31,16 @@ const IndexPage = () => {
         </div>
       ) : (
         <SimpleGrid
-          spacing={{ base: '7', md: '3', lg: '5', xl: '2', '2xl': '1' }}
-          columns={{ base: '1', md: '3', lg: '3', xl: '5', '2xl': '7' }}
+          spacing={{ base: '7', md: '3', lg: '5', xl: '2', '2xl': '5' }}
+          columns={{ base: '1', md: '3', lg: '4', xl: '5', '2xl': '8' }}
           margin={{ base: '28px', lg: '28px 36px' }}
         >
           {allPlaces.map((place, index) => (
-            <Link to={`/place/${place._id}`} key={index}>
+            <Link
+              to={`/place/${place._id}`}
+              key={index}
+              style={{ justifySelf: 'center' }}
+            >
               <SinglePlace place={place} />
             </Link>
           ))}

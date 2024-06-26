@@ -14,7 +14,10 @@ import PlaceContextProvider from './context/PlaceContext';
 import IndexPage from './pages/IndexPage';
 import PlaceDetails from './components/PlaceDetails';
 
-axios.defaults.baseURL = 'http://localhost:4002';
+let apiUrl = 'http://localhost:4002';
+// let apiUrl = 'https://booking-app-f59w.onrender.com';
+
+axios.defaults.baseURL = apiUrl;
 axios.defaults.withCredentials = true;
 axios.defaults.headers = { 'Content-Type': 'application/json' };
 

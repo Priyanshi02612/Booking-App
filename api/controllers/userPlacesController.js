@@ -21,7 +21,6 @@ class userPlaceController {
 
   singlePlace = async (req, res) => {
     const placeId = req;
-    console.log({ placeId });
 
     try {
       const placeData = await PlaceModel.findById(placeId);

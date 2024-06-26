@@ -15,13 +15,19 @@
     "@emotion/styled": "^11",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
+    "date-fns": "^3.6.0",
     "framer-motion": "^4",
     "ngrok": "^5.0.0-beta.2",
     "postcss": "^8.4.38",
     "react": "^18.2.0",
+    "react-calendar": "^5.0.0",
+    "react-datepicker": "^7.1.0",
     "react-dom": "^18.2.0",
+    "react-grid-gallery": "^1.0.1",
     "react-icons": "^5.2.1",
-    "react-router-dom": "^6.23.1"
+    "react-photo-collage": "^1.0.9",
+    "react-router-dom": "^6.23.1",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

@@ -1,8 +1,10 @@
 import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaStar } from 'react-icons/fa6';
+import { UserContext } from '../context/UserContext';
 
 const SinglePlace = ({ place }) => {
+  const { apiUrl } = useContext(UserContext);
   return (
     <Flex
       flexDirection='column'
@@ -11,7 +13,7 @@ const SinglePlace = ({ place }) => {
       width='fit-content'
     >
       <Image
-        src={'http://localhost:4002/uploads/' + place.photos[0]}
+        src={`${apiUrl}/uploads/` + place.photos[0]}
         w={{ base: '300px', md: '212px', lg: '250px' }}
         h='200px'
         borderRadius='12px'

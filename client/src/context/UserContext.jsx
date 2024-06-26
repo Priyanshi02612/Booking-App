@@ -7,6 +7,11 @@ const USerContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isUserReady, setIsUserReady] = useState(false);
 
+  let apiUrl = 'http://localhost:4002';
+  // let apiUrl = 'https://booking-app-f59w.onrender.com';
+
+  axios.defaults.baseURL = apiUrl;
+
   useEffect(() => {
     if (!user) {
       axios.get('/profile').then(({ data }) => {
@@ -18,7 +23,7 @@ const USerContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, isUserReady, setIsUserReady }}
+      value={{ user, setUser, isUserReady, setIsUserReady, apiUrl }}
     >
       {children}
     </UserContext.Provider>
