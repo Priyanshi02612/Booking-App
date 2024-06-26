@@ -13,6 +13,7 @@ const authRoutes = require('./routes/auth.route.js');
 const uploadRouter = require('./routes/upload.route.js');
 const userPlaceRouter = require('./routes/userPlace.route.js');
 const placeRouter = require('./routes/place.route.js');
+const bookingRouter = require('./routes/booking.route.js');
 
 const app = express();
 
@@ -91,3 +92,4 @@ app.use('/auth', authRoutes);
 app.use('/upload', uploadRouter);
 app.use('/user-place', userPlaceRouter);
 app.use('/place', placeRouter);
+app.use('/bookplace', bookingRouter);
