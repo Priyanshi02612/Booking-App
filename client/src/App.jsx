@@ -16,8 +16,8 @@ import PlaceDetails from './components/PlaceDetails';
 import BookingsPage from './pages/BookingsPage';
 import BookingPage from './pages/BookingPage';
 
-let apiUrl = 'http://localhost:4002';
-// let apiUrl = 'https://booking-app-f59w.onrender.com';
+// let apiUrl = 'http://localhost:4002';
+let apiUrl = 'https://booking-app-f59w.onrender.com';
 
 axios.defaults.baseURL = apiUrl;
 axios.defaults.withCredentials = true;

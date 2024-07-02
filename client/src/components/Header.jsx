@@ -43,7 +43,7 @@ const Header = () => {
         )}
 
         <Link
-          to={user ? '/account' : '/login'}
+          to={user ? '/account/profile' : '/login'}
           style={{
             display: 'flex',
             gap: '12px',

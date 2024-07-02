@@ -29,9 +29,7 @@ const AccountNavbar = () => {
   const navigate = useNavigate();
 
   const [activePage, setActivePage] = useState(() => {
-    const foundPage = pages.find((page) =>
-      location.pathname.startsWith(page.path)
-    );
+    const foundPage = pages.find((page) => location.pathname === page.path);
     return foundPage ? foundPage.subpage : 'profile';
   });
 
