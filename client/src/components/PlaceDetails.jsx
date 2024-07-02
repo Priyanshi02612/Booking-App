@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import {
   Button,
@@ -25,13 +25,16 @@ import { differenceInCalendarDays } from 'date-fns';
 
 const PlaceDetails = () => {
   const { id } = useParams();
-  const { apiUrl } = useContext(UserContext);
+  const { user, apiUrl } = useContext(UserContext);
   const toast = useToast();
+  const navigate = useNavigate();
+
   const [showMorePhotos, setShowMorePhotos] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
   const [placeDetails, setPlaceDetails] = useState({});
   const [bookingDetails, setBookingDetails] = useState({
+    place: {},
     name: '',
     contact: '',
     checkIn: '',
@@ -40,8 +43,14 @@ const PlaceDetails = () => {
     userId: '',
     price: 0,
   });
+  
   const [bookingPlace, setBookingPlace] = useState(false);
-  const [bookingId, setBookingId] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      setBookingDetails({ ...bookingDetails, name: user.name });
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchPlace = async () => {
@@ -72,7 +81,7 @@ const PlaceDetails = () => {
       userId: placeDetails?.userId,
     }));
   }, [placeDetails]);
-
+ 
   const photos = placeDetails.photos || [];
   const initialPhotos = photos.slice(0, 3);
   const remainingPhotos = photos.slice(3);
@@ -98,10 +107,10 @@ const PlaceDetails = () => {
       setBookingPlace(true);
 
       const response = await axios.post('/bookplace/booking', {
-        data: bookingDetails,
+        data: { ...bookingDetails, place: placeDetails },
       });
 
-      setBookingId(response.data.data._id);
+      const bookingId = response.data.data._id;
 
       if (response.data.success === true) {
         toast({
@@ -113,6 +122,7 @@ const PlaceDetails = () => {
       }
 
       setBookingDetails({
+        place: {},
         name: '',
         contact: '',
         checkIn: '',
@@ -122,14 +132,16 @@ const PlaceDetails = () => {
       });
 
       setBookingPlace(false);
+
+      navigate(`/account/bookings/${bookingId}`);
     } catch (error) {
-      console.log(error);
       toast({
         title: error.response.data.message,
         status: 'error',
         isClosable: true,
         duration: 3000,
       });
+
       setBookingPlace(false);
     }
   };

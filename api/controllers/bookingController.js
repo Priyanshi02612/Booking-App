@@ -1,6 +1,26 @@
 const { BookingModel } = require('../models/booking.model');
 
 class BookingController {
+  all = async (req, res) => {
+    const id = req.cookies.userId;
+
+    try {
+      const bookedPlaceData = await BookingModel.find({ userId: id }).populate(
+        'place'
+      );
+
+      res.status(200).json({
+        success: true,
+        data: bookedPlaceData,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Error while retrieving bookings data.',
+      });
+    }
+  };
+
   bookPlace = async (req, res) => {
     try {
       const bookingData = req.body.data;
