@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { Box, Button, Flex, Input, Text, useToast } from '@chakra-ui/react';
 import { UserContext } from '../context/UserContext';
+import { UserService } from '../services/user.service';
 
 const LoginPage = () => {
   const [userLoginData, setUserLoginData] = useState({
@@ -18,13 +18,12 @@ const LoginPage = () => {
 
   const handleUserLogin = async () => {
     try {
-      const response = await axios.post('/user/login', userLoginData);
+      const response = await UserService.login(userLoginData);
+      setUser(response.data);
 
-      setUser(response.data.data);
-
-      if (response.status === 200) {
+      if (response.success === true) {
         toast({
-          title: response.data.message,
+          title: response.message,
           status: 'success',
           isClosable: true,
           duration: 3000,
