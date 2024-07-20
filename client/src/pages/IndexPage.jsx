@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
 import SinglePlace from '../components/SinglePlace';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 const IndexPage = () => {
   const [allPlaces, setAllPlaces] = useState([]);
@@ -12,7 +13,7 @@ const IndexPage = () => {
     const fetchAllPlaces = async () => {
       setFetchingAllPlaces(true);
 
-      const response = await axios.get('/place/');
+      const response = await axios.get(`${API_BASE_URL}/place/`);
       setAllPlaces([...response.data.data]);
 
       setFetchingAllPlaces(false);

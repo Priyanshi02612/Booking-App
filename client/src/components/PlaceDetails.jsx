@@ -22,10 +22,11 @@ import { SlLocationPin } from 'react-icons/sl';
 import { IoMdArrowDropright, IoMdClose, IoMdPhotos } from 'react-icons/io';
 import { UserContext } from '../context/UserContext';
 import { differenceInCalendarDays } from 'date-fns';
+import { API_BASE_URL } from '../config';
 
 const PlaceDetails = () => {
   const { id } = useParams();
-  const { user, apiUrl } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -167,7 +168,7 @@ const PlaceDetails = () => {
           <Flex flexDir={{ base: 'column', xl: 'row' }} gap='12px' mt='12px'>
             <Flex gap='4px' position='relative'>
               <Image
-                src={`${apiUrl}/uploads/${initialPhotos[0]}`}
+                src={`${API_BASE_URL}/uploads/${initialPhotos[0]}`}
                 objectFit='cover'
                 width={{ base: '344px', md: '448px', lg: '600px' }}
                 height={{ base: '234px', md: 'auto' }}
@@ -182,7 +183,7 @@ const PlaceDetails = () => {
                 {[1, 2].map((index) => (
                   <Image
                     key={index}
-                    src={`${apiUrl}/uploads/${initialPhotos[index]}`}
+                    src={`${API_BASE_URL}/uploads/${initialPhotos[index]}`}
                     objectFit='cover'
                     width='333px'
                     height='224px'
@@ -424,7 +425,7 @@ const PlaceDetails = () => {
                 {placeDetails.photos.map((photo, index) => (
                   <Image
                     key={index}
-                    src={`${apiUrl}/uploads/${photo}`}
+                    src={`${API_BASE_URL}/uploads/${photo}`}
                     justifySelf='center'
                     objectFit='cover'
                     width={{ base: '300px', md: '500px' }}
