@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { Box, Button, Input, Text, useToast } from '@chakra-ui/react';
+import { UserService } from '../services/user.service';
 
 const RegisterPage = () => {
   const [registrationData, setRegistrationData] = useState({
@@ -31,11 +31,11 @@ const RegisterPage = () => {
     try {
       setRegisteringUser(true);
 
-      const response = await axios.post('/user/register', registrationData);
+      const response = await UserService.register(registrationData);
 
-      if (response.status === 200) {
+      if (response.success === true) {
         toast({
-          title: response.data.message,
+          title: response.message,
           status: 'success',
           isClosable: true,
           duration: 3000,

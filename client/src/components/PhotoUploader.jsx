@@ -2,7 +2,7 @@ import { Box, Button, Flex, Icon, Image, Input, Text } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
 import { FaUpload, FaTrash, FaStar, FaRegStar } from 'react-icons/fa6';
 import { PlaceContext } from '../context/PlaceContext';
-import { UserContext } from '../context/UserContext';
+import { API_BASE_URL } from '../config';
 
 const PhotoUploader = () => {
   const {
@@ -13,7 +13,6 @@ const PhotoUploader = () => {
     uploadingPhoto,
     handleSelectMainPhoto,
   } = useContext(PlaceContext);
-  const { apiUrl } = useContext(UserContext);
 
   const [imageLink, setImageLink] = useState('');
 
@@ -50,7 +49,7 @@ const PhotoUploader = () => {
           placeFormData.photos.map((link, index) => (
             <Box key={index} position='relative'>
               <Image
-                src={`${apiUrl}/uploads/` + link}
+                src={`${API_BASE_URL}/uploads/` + link}
                 w='160px'
                 h='150px'
                 borderRadius='8px'

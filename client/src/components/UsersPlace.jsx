@@ -1,10 +1,9 @@
 import { Box, Image, Text, Card, Stack, CardBody } from '@chakra-ui/react';
-import React, { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+import React from 'react';
+import { API_BASE_URL } from '../config';
 
 const UsersPlace = ({ place }) => {
-  const { apiUrl } = useContext(UserContext);
-  const photos = place.photos.map((photo) => `${apiUrl}/uploads/` + photo);
+  const photos = place.photos.map((photo) => `${API_BASE_URL}/uploads/` + photo);
 
   return (
     <Card maxW='sm'>

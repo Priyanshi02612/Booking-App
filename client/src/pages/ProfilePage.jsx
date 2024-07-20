@@ -1,39 +1,31 @@
-import { Button, Flex, Spinner, Text, useToast } from '@chakra-ui/react';
+import { Button, Flex, Text, useToast } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-import axios from 'axios';
+import { useNavigate } from 'react-router';
+import { UserService } from '../services/user.service';
 
-const ProfilePage = ({ setRedirect }) => {
-  const { user, setUser, isUserReady, setIsUserReady } =
-    useContext(UserContext);
+const ProfilePage = () => {
+  const { user, setUser } = useContext(UserContext);
   const toast = useToast();
+  const navigate = useNavigate();
 
   const handleUserLogout = async () => {
     try {
-      const response = await axios.post('/auth/logout');
+      const response = await UserService.logOut();
 
       toast({
-        title: response.data.message,
+        title: response.message,
         status: 'success',
         isClosable: true,
         duration: 3000,
       });
 
       setUser(null);
-      setIsUserReady(true);
-      setRedirect('/');
+      navigate('/');
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
-
-  if (!isUserReady) {
-    return (
-      <Flex h='40vh' alignItems='center' justifyContent='center'>
-        <Spinner size='md' />
-      </Flex>
-    );
-  }
 
   return (
     <Flex
