@@ -16,12 +16,6 @@ const pages = [
     subpage: 'bookings',
     icon: FaListUl,
   },
-  {
-    name: 'My Accommodations',
-    path: '/account/places',
-    subpage: 'places',
-    icon: FaBuilding,
-  },
 ];
 
 const AccountNavbar = () => {
@@ -34,9 +28,7 @@ const AccountNavbar = () => {
   });
 
   const [tabIndex, setTabIndex] = useState(() => {
-    if (location.pathname.includes('/account/places')) {
-      return 2;
-    } else if (location.pathname === '/account/bookings') {
+    if (location.pathname === '/account/bookings') {
       return 1;
     } else {
       return 0;

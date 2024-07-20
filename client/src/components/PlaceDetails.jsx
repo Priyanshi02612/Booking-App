@@ -133,7 +133,6 @@ const PlaceDetails = () => {
 
       setBookingPlace(false);
 
-      navigate(`/account/bookings/${bookingId}`);
     } catch (error) {
       toast({
         title: error.response.data.message,

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { React, createContext, useEffect, useState } from 'react';
+import { API_BASE_URL } from '../config';
 
 export const UserContext = createContext();
 
@@ -7,9 +8,7 @@ const USerContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isUserReady, setIsUserReady] = useState(false);
 
-  let apiUrl = 'http://localhost:4002';
-  // let apiUrl = 'https://booking-app-f59w.onrender.com';
-
+  let apiUrl = API_BASE_URL;
   axios.defaults.baseURL = apiUrl;
 
   useEffect(() => {
