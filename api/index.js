@@ -9,7 +9,6 @@ const path = require('path');
 
 dotenv.config({ path: './.env' });
 
-const authRoutes = require('./routes/auth.route.js');
 const uploadRouter = require('./routes/upload.route.js');
 const userPlaceRouter = require('./routes/userPlace.route.js');
 const placeRouter = require('./routes/place.route.js');
@@ -65,30 +64,9 @@ async function getUserDataFromDatabase(token) {
   }
 }
 
-app.get('/profile', async (req, res) => {
-  const token = req.cookies;
-
-  if (token) {
-    try {
-      const userData = await getUserDataFromDatabase(token);
-
-      if (userData) {
-        res.json(userData);
-      } else {
-        res.status(404).send('User not found');
-      }
-    } catch (error) {
-      res.status(500).send('Error retrieving user data');
-    }
-  } else {
-    res.status(401).send('No token found');
-  }
-});
-
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/user', userRouter);
-app.use('/auth', authRoutes);
 app.use('/upload', uploadRouter);
 app.use('/user-place', userPlaceRouter);
 app.use('/place', placeRouter);

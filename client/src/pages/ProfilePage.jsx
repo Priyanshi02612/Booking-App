@@ -2,7 +2,6 @@ import { Button, Flex, Text, useToast } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router';
-import { UserService } from '../services/user.service';
 
 const ProfilePage = () => {
   const { user, setUser } = useContext(UserContext);
@@ -10,21 +9,16 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   const handleUserLogout = async () => {
-    try {
-      const response = await UserService.logOut();
+    setUser(null);
+    localStorage.removeItem('user');
+    navigate('/');
 
-      toast({
-        title: response.message,
-        status: 'success',
-        isClosable: true,
-        duration: 3000,
-      });
-
-      setUser(null);
-      navigate('/');
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
+    toast({
+      title: 'Logout successfully!',
+      status: 'success',
+      isClosable: true,
+      duration: 3000,
+    });
   };
 
   return (
