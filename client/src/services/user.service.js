@@ -17,9 +17,4 @@ export class UserService {
     );
     return response.data;
   };
-
-  static logOut = async () => {
-    const response = await axios.post(`${API_BASE_URL}/auth/logout`);
-    return response.data;
-  };
 }

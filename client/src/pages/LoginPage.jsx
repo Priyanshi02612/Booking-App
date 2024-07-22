@@ -20,7 +20,8 @@ const LoginPage = () => {
     try {
       const response = await UserService.login(userLoginData);
       setUser(response.data);
-
+      localStorage.setItem('user', JSON.stringify(response.data));
+      
       if (response.success === true) {
         toast({
           title: response.message,

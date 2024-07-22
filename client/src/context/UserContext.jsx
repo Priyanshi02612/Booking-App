@@ -1,21 +1,15 @@
-import axios from 'axios';
-import { React, createContext, useEffect, useState } from 'react';
-import { API_BASE_URL } from '../config';
+import { React, createContext, useState } from 'react';
 
 export const UserContext = createContext();
 
 const USerContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isUserReady, setIsUserReady] = useState(false);
+  const [user, setUser] = useState(
+    localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user'))
+      : null
+  );
 
-  useEffect(() => {
-    if (!user) {
-      axios.get(`${API_BASE_URL}/profile`).then(({ data }) => {
-        setUser(data);
-        setIsUserReady(true);
-      });
-    }
-  }, []);
+  const [isUserReady, setIsUserReady] = useState(false);
 
   return (
     <UserContext.Provider
